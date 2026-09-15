@@ -16,22 +16,22 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
-          <a href="#hero" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-wood-800 text-wood-100 flex items-center justify-center shadow-md group-hover:bg-wood-700 transition-colors">
-              <Trees className="w-7 h-7 text-amber-400" />
+          <a href="#hero" className="flex items-center gap-2.5 sm:gap-3 group">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-wood-800 text-wood-100 flex items-center justify-center shadow-md group-hover:bg-wood-700 transition-colors shrink-0">
+              <Trees className="w-6 h-6 sm:w-7 sm:h-7 text-amber-400" />
             </div>
             <div>
-              <span className="text-2xl font-bold font-serif text-wood-950 tracking-tight">
+              <span className="text-xl sm:text-2xl font-bold font-serif text-wood-950 tracking-tight block">
                 MonBois<span className="text-wood-600">.eu</span>
               </span>
-              <span className="block text-xs text-wood-600 font-medium">
+              <span className="block text-[10px] sm:text-xs text-wood-600 font-medium -mt-1">
                 Europe & America Timber
               </span>
             </div>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
             <a
               href="#hero"
               className="text-wood-800 hover:text-wood-600 font-medium transition-colors text-sm"
@@ -59,12 +59,12 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Action Controls (Email button, Currency, Language Switcher) */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
             
             {/* Direct Email Action Button */}
             <a
               href="mailto:contact@monbois.eu"
-              className="flex items-center gap-2 px-4 py-2 bg-wood-100 text-wood-900 hover:bg-wood-200 rounded-lg text-sm font-semibold transition-colors border border-wood-300"
+              className="flex items-center gap-2 px-3.5 py-2 bg-wood-100 text-wood-900 hover:bg-wood-200 rounded-lg text-sm font-semibold transition-colors border border-wood-300"
             >
               <Mail className="w-4 h-4 text-wood-700" />
               <span>{t.emailBtn}</span>
@@ -74,7 +74,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={toggleCurrency}
               title="Changer la devise"
-              className="flex items-center gap-1 px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-sm font-semibold transition-colors border border-stone-300"
+              className="flex items-center gap-1.5 px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-sm font-semibold transition-colors border border-stone-300"
             >
               {currency === 'EUR' ? (
                 <>
@@ -92,25 +92,37 @@ export const Navbar: React.FC = () => {
             {/* Language Switcher with Icon */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-2 px-4 py-2 bg-wood-800 hover:bg-wood-900 text-white rounded-lg text-sm font-semibold shadow-sm transition-all"
+              className="flex items-center gap-2 px-3.5 py-2 bg-wood-800 hover:bg-wood-900 text-white rounded-lg text-sm font-semibold shadow-sm transition-all"
             >
               <Globe className="w-4 h-4 text-amber-300" />
               <span>{language === 'fr' ? '🇫🇷 FR | EN' : '🇬🇧 EN | FR'}</span>
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile menu button and quick controls */}
+          <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={toggleCurrency}
+              className="px-2.5 py-1.5 bg-stone-100 text-stone-900 rounded-lg text-xs font-bold border border-stone-300 flex items-center gap-1"
+              title="Change Currency"
+            >
+              {currency === 'EUR' ? <Euro className="w-3.5 h-3.5 text-emerald-600" /> : <DollarSign className="w-3.5 h-3.5 text-blue-600" />}
+              <span>{currency}</span>
+            </button>
+
             <button
               onClick={toggleLanguage}
-              className="p-2 text-wood-800 hover:bg-wood-100 rounded-lg"
-              title="Language"
+              className="px-2.5 py-1.5 bg-wood-800 text-amber-300 rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm"
+              title="Changer la langue"
             >
-              <Globe className="w-5 h-5 text-wood-700" />
+              <Globe className="w-3.5 h-3.5 text-amber-300" />
+              <span>{language.toUpperCase()}</span>
             </button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-wood-900 hover:bg-wood-100 rounded-lg"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -121,33 +133,33 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-wood-200 px-4 pt-2 pb-6 space-y-4">
-          <nav className="flex flex-col gap-3">
+        <div className="lg:hidden bg-white border-b border-wood-200 px-4 pt-3 pb-6 space-y-4 shadow-xl animate-in slide-in-from-top-2 duration-200">
+          <nav className="flex flex-col gap-2">
             <a
               href="#hero"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-wood-900 font-medium py-2 border-b border-stone-100"
+              className="text-wood-900 font-semibold py-2.5 px-3 rounded-lg hover:bg-wood-50 border-b border-stone-100"
             >
               {t.home}
             </a>
             <a
               href="#search"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-wood-900 font-medium py-2 border-b border-stone-100"
+              className="text-wood-900 font-semibold py-2.5 px-3 rounded-lg hover:bg-wood-50 border-b border-stone-100"
             >
               Catalogue
             </a>
             <a
               href="#about"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-wood-900 font-medium py-2 border-b border-stone-100"
+              className="text-wood-900 font-semibold py-2.5 px-3 rounded-lg hover:bg-wood-50 border-b border-stone-100"
             >
               {t.about}
             </a>
             <a
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-wood-900 font-medium py-2 border-b border-stone-100"
+              className="text-wood-900 font-semibold py-2.5 px-3 rounded-lg hover:bg-wood-50 border-b border-stone-100"
             >
               {t.contact}
             </a>
@@ -156,24 +168,26 @@ export const Navbar: React.FC = () => {
           <div className="flex flex-col gap-3 pt-2">
             <a
               href="mailto:contact@monbois.eu"
-              className="flex items-center justify-center gap-2 py-2.5 bg-wood-100 text-wood-900 rounded-lg font-semibold border border-wood-300"
+              className="flex items-center justify-center gap-2 py-3 bg-wood-100 text-wood-900 rounded-xl font-bold border border-wood-300 text-sm"
             >
-              <Mail className="w-4 h-4" />
+              <Mail className="w-4 h-4 text-wood-700" />
               <span>{t.emailBtn} (contact@monbois.eu)</span>
             </a>
-            <div className="flex items-center gap-2">
+
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={toggleCurrency}
-                className="flex-1 flex items-center justify-center gap-2 py-2 bg-stone-100 text-stone-800 rounded-lg font-semibold border border-stone-300 text-sm"
+                className="flex items-center justify-center gap-1.5 py-2.5 bg-stone-100 text-stone-900 rounded-xl font-bold border border-stone-300 text-xs"
               >
-                {currency === 'EUR' ? 'Devise: EUR (€)' : 'Currency: USD ($)'}
+                {currency === 'EUR' ? <Euro className="w-4 h-4 text-emerald-600" /> : <DollarSign className="w-4 h-4 text-blue-600" />}
+                <span>{currency === 'EUR' ? 'EUR (€)' : 'USD ($)'}</span>
               </button>
               <button
                 onClick={toggleLanguage}
-                className="flex-1 flex items-center justify-center gap-2 py-2 bg-wood-800 text-white rounded-lg font-semibold text-sm"
+                className="flex items-center justify-center gap-1.5 py-2.5 bg-wood-800 text-amber-300 rounded-xl font-bold text-xs shadow-sm"
               >
                 <Globe className="w-4 h-4 text-amber-300" />
-                <span>{language === 'fr' ? 'Passer en English' : 'Switch to Français'}</span>
+                <span>{language === 'fr' ? 'English (EN)' : 'Français (FR)'}</span>
               </button>
             </div>
           </div>
