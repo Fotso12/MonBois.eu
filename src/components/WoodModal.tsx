@@ -4,15 +4,21 @@ import React from 'react';
 import { WoodItem } from '@/data/woods';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
-import { X, CheckCircle2, ShieldCheck, Scale, Compass, Award, Tag, Mail } from 'lucide-react';
+import { X, CheckCircle2, ShieldCheck, Scale, Compass, Award, Tag, Mail, ShoppingCart } from 'lucide-react';
 
 interface WoodModalProps {
   wood: WoodItem | null;
   onClose: () => void;
   onSelectForQuote: (woodName: string) => void;
+  onOpenOrder: (wood: WoodItem) => void;
 }
 
-export const WoodModal: React.FC<WoodModalProps> = ({ wood, onClose, onSelectForQuote }) => {
+export const WoodModal: React.FC<WoodModalProps> = ({
+  wood,
+  onClose,
+  onSelectForQuote,
+  onOpenOrder,
+}) => {
   const { language, formatPrice } = useLanguage();
   if (!wood) return null;
 
@@ -59,7 +65,7 @@ export const WoodModal: React.FC<WoodModalProps> = ({ wood, onClose, onSelectFor
             {wood.description[language]}
           </p>
 
-          {/* Pricing Highlight Box */}
+          {/* Pricing & Order Highlight Box */}
           <div className="bg-wood-50 rounded-xl p-5 border border-wood-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <p className="text-xs font-semibold text-wood-500 uppercase tracking-wider">
@@ -73,16 +79,29 @@ export const WoodModal: React.FC<WoodModalProps> = ({ wood, onClose, onSelectFor
               </p>
             </div>
             
-            <button
-              onClick={() => {
-                onSelectForQuote(wood.name[language]);
-                onClose();
-              }}
-              className="px-5 py-3 bg-wood-800 hover:bg-wood-900 text-amber-300 font-bold text-sm rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all"
-            >
-              <Mail className="w-4 h-4 text-amber-300" />
-              <span>{t.requestQuote}</span>
-            </button>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenOrder(wood);
+                }}
+                className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-1.5 shadow-md transition-all"
+              >
+                <ShoppingCart className="w-4 h-4 text-emerald-200" />
+                <span>{t.orderNow}</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onSelectForQuote(wood.name[language]);
+                  onClose();
+                }}
+                className="px-4 py-2.5 bg-wood-800 hover:bg-wood-900 text-amber-300 font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-1.5 transition-all"
+              >
+                <Mail className="w-4 h-4 text-amber-300" />
+                <span>{t.requestQuote}</span>
+              </button>
+            </div>
           </div>
 
           {/* Specs Grid */}

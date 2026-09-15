@@ -4,14 +4,15 @@ import React from 'react';
 import { WoodItem } from '@/data/woods';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
-import { Eye, ShieldCheck } from 'lucide-react';
+import { Eye, ShoppingCart } from 'lucide-react';
 
 interface WoodCardProps {
   wood: WoodItem;
   onOpenModal: (wood: WoodItem) => void;
+  onOpenOrder: (wood: WoodItem) => void;
 }
 
-export const WoodCard: React.FC<WoodCardProps> = ({ wood, onOpenModal }) => {
+export const WoodCard: React.FC<WoodCardProps> = ({ wood, onOpenModal, onOpenOrder }) => {
   const { language, formatPrice } = useLanguage();
   const t = translations[language].catalog;
 
@@ -75,10 +76,10 @@ export const WoodCard: React.FC<WoodCardProps> = ({ wood, onOpenModal }) => {
           </div>
         </div>
 
-        {/* Footer: Price & View Details CTA */}
-        <div className="pt-2 flex items-center justify-between gap-2">
-          <div>
-            <span className="block text-[10px] font-semibold text-wood-400 uppercase">
+        {/* Footer: Price & Action Buttons */}
+        <div className="pt-2 flex flex-col space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-wood-400 uppercase">
               {t.priceLabel}
             </span>
             <span className="text-base sm:text-lg font-extrabold text-wood-950">
@@ -86,13 +87,23 @@ export const WoodCard: React.FC<WoodCardProps> = ({ wood, onOpenModal }) => {
             </span>
           </div>
 
-          <button
-            onClick={() => onOpenModal(wood)}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-wood-100 hover:bg-wood-800 text-wood-900 hover:text-amber-300 rounded-lg text-xs font-bold transition-all border border-wood-300 hover:border-wood-800 shrink-0"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            <span>{t.viewDetails}</span>
-          </button>
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              onClick={() => onOpenModal(wood)}
+              className="flex items-center justify-center gap-1 px-2.5 py-2 bg-wood-100 hover:bg-wood-200 text-wood-900 rounded-lg text-xs font-bold transition-all border border-wood-300"
+            >
+              <Eye className="w-3.5 h-3.5 text-wood-700" />
+              <span>{t.viewDetails}</span>
+            </button>
+
+            <button
+              onClick={() => onOpenOrder(wood)}
+              className="flex items-center justify-center gap-1 px-2.5 py-2 bg-wood-800 hover:bg-wood-900 text-amber-300 rounded-lg text-xs font-bold transition-all shadow-sm"
+            >
+              <ShoppingCart className="w-3.5 h-3.5 text-amber-300" />
+              <span>{t.orderBtn}</span>
+            </button>
+          </div>
         </div>
 
       </div>
