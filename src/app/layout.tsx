@@ -15,9 +15,31 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "MonBois.eu | Vente & Exportation de Bois Noble en Europe et Amérique",
-  description: "MonBois.eu - Spécialiste européen du négoce et de l'exportation de bois massifs certifiés FSC (Chêne, Noyer, Teck, Douglas) vers l'Union Européenne et l'Amérique du Nord.",
-  keywords: "vente de bois, bois noble, chêne français, noyer américain, teck marine, export bois europe, export bois amerique, FSC timber, MonBois.eu",
+  title: "MonBois.eu | Vente & Exportation de Bois de Chauffage & Pellets",
+  description: "MonBois.eu - Spécialiste européen du bois de chauffage séché au four (H1 < 18%), bois densifié et granulés DIN+. Livraison sur palette dans toute l'Union Européenne et l'Amérique du Nord.",
+  keywords: "bois de chauffage, bûches de chêne, granulés de bois, pellets DIN+, bois densifié, virement bancaire UBA, MonBois.eu",
+  openGraph: {
+    title: "MonBois.eu | Bois de Chauffage & Pellets Haute Performance",
+    description: "Commandez votre bois de chauffage séché au four et vos pellets DIN+ certifiés. Livraisons sécurisées en palettes vers l'Europe et l'Amérique.",
+    url: "https://monbois.eu",
+    siteName: "MonBois.eu",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&q=80&w=1200",
+        width: 1200,
+        height: 630,
+        alt: "MonBois.eu Bois de chauffage et Bûches",
+      },
+    ],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MonBois.eu | Vente & Export de Bois de Chauffage",
+    description: "Bûches massives séchées au four, bois densifié et granulés DIN+ livrés à domicile.",
+    images: ["https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&q=80&w=1200"],
+  },
 };
 
 export default function RootLayout({
