@@ -55,7 +55,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { wood, volume }];
     });
-    setIsCartOpen(true);
+    // Quietly add to cart without auto-opening the drawer
   };
 
   const removeFromCart = (woodId: string) => {

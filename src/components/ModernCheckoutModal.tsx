@@ -10,6 +10,7 @@ import {
   SGLogo,
   BoursoBankLogo,
   BNPLogo,
+  CreditAgricoleLogo,
   UBALogo
 } from './PaymentLogos';
 import {
@@ -22,7 +23,6 @@ import {
   Check,
   Printer,
   ShieldCheck,
-  ArrowRight
 } from 'lucide-react';
 
 interface ModernCheckoutModalProps {
@@ -58,7 +58,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
   // Bank details UBA Cameroon
   const ubaDetails = {
     accountHolder: "MonBois.eu Export SARL",
-    bankName: "United Bank for Africa (UBA Cameroun)",
+    bankName: "United Bank for Africa (UBA Cameroun SA)",
     swift: "UBAACMCX",
     iban: "CM21 1003 3000 1001 0234 5678 945",
   };
@@ -104,17 +104,17 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
               
               <div>
                 <h3 className="text-lg font-bold font-serif text-slate-900 mb-1">
-                  1. Informations de Livraison
+                  1. Coordonnées & Livraison
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Renseignez vos coordonnées pour l&apos;établissement du bon d&apos;expédition.
+                  Renseignez vos informations pour l&apos;expédition de votre commande.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nom Complet *</label>
+                    <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nom complet *</label>
                     <input
                       type="text"
                       required
@@ -125,7 +125,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Adresse Email *</label>
+                    <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email *</label>
                     <input
                       type="email"
                       required
@@ -169,7 +169,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Adresse complète de livraison *</label>
+                  <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Adresse de livraison *</label>
                   <input
                     type="text"
                     required
@@ -181,7 +181,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                 </div>
               </div>
 
-              {/* Order Recap list */}
+              {/* Order Recap */}
               <div className="pt-2">
                 <span className="block text-xs font-bold text-slate-800 mb-2">Contenu du Panier :</span>
                 <div className="space-y-1.5 max-h-28 overflow-y-auto pr-1">
@@ -196,7 +196,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
 
             </div>
 
-            {/* Right Column: Payment Method Selection & Checkout (5 cols) */}
+            {/* Right Column: Payment Selector (5 cols) */}
             <div className="lg:col-span-5 p-6 sm:p-8 bg-slate-50 space-y-5 flex flex-col justify-between">
               
               <div className="space-y-4">
@@ -224,14 +224,17 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                       />
                       <span className="font-bold text-slate-900 text-xs sm:text-sm">Carte Bancaire</span>
                     </div>
-                    <div className="flex gap-1">
-                      <VisaLogo />
-                      <MastercardLogo />
-                      <ApplePayLogo />
-                    </div>
                   </div>
+                  
+                  {/* Official Card Logos */}
+                  <div className="flex items-center gap-1.5 pl-6 my-1.5">
+                    <VisaLogo />
+                    <MastercardLogo />
+                    <ApplePayLogo />
+                  </div>
+
                   <p className="text-[11px] text-slate-500 pl-6">
-                    Paiement instantané simulé par Carte Bleue, Visa, Mastercard ou Apple Pay.
+                    Paiement instantané par Visa, Mastercard ou Apple Pay.
                   </p>
                 </label>
 
@@ -255,17 +258,19 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                       />
                       <span className="font-bold text-slate-900 text-xs sm:text-sm">Virement Bancaire SWIFT / SEPA</span>
                     </div>
-                    <UBALogo />
                   </div>
-                  
-                  <div className="flex flex-wrap gap-1 pl-6 pt-1">
+
+                  {/* Official Bank Logos */}
+                  <div className="flex flex-wrap gap-1.5 pl-6 my-2">
                     <SGLogo />
                     <BoursoBankLogo />
                     <BNPLogo />
+                    <CreditAgricoleLogo />
+                    <UBALogo />
                   </div>
                   
-                  <p className="text-[11px] text-slate-500 pl-6 mt-1.5">
-                    Virement depuis votre application bancaire (SG, BoursoBank, BNP...) vers notre compte UBA Cameroun.
+                  <p className="text-[11px] text-slate-500 pl-6">
+                    Effectuez un virement depuis votre application bancaire (SG, BoursoBank, BNP...) vers notre compte UBA Cameroun.
                   </p>
                 </label>
 
@@ -319,12 +324,30 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
 
                     <div className="flex justify-between items-center text-[11px]">
                       <span className="text-slate-400">SWIFT / BIC :</span>
-                      <span className="font-mono text-amber-300 font-bold">{ubaDetails.swift}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-mono text-amber-300 font-bold">{ubaDetails.swift}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(ubaDetails.swift, 'swift')}
+                          className="p-1 hover:text-amber-300"
+                        >
+                          {copiedField === 'swift' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3 text-slate-400" />}
+                        </button>
+                      </div>
                     </div>
 
                     <div className="flex justify-between items-center text-[11px]">
                       <span className="text-slate-400">IBAN / RIB :</span>
-                      <span className="font-mono text-white text-[10px] truncate max-w-[150px]">{ubaDetails.iban}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-mono text-white text-[10px]">{ubaDetails.iban}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(ubaDetails.iban, 'iban')}
+                          className="p-1 hover:text-amber-300"
+                        >
+                          {copiedField === 'iban' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3 text-slate-400" />}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -345,7 +368,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                   className="w-full py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm transition-all"
                 >
                   <ShieldCheck className="w-4 h-4 text-emerald-200" />
-                  <span>Payer et Valider la Commande</span>
+                  <span>Valider la commande</span>
                 </button>
               </div>
 
@@ -361,7 +384,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
 
             <div>
               <h3 className="text-2xl font-bold font-serif text-slate-900 mb-1">
-                Commande Validée avec Succès !
+                Commande Confirmée !
               </h3>
               <p className="text-xs text-slate-500">
                 Référence de commande : <strong className="text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-sm">{orderRef}</strong>
@@ -380,7 +403,7 @@ export const ModernCheckoutModal: React.FC<ModernCheckoutModalProps> = ({ isOpen
                   <p><strong className="text-slate-400">Code SWIFT :</strong> <span className="font-mono text-amber-300 font-bold">{ubaDetails.swift}</span></p>
                   <p><strong className="text-slate-400">IBAN International :</strong> <span className="font-mono text-white">{ubaDetails.iban}</span></p>
                   <p className="text-amber-200 pt-1 text-[10px]">
-                    &bull; Pensez à indiquer la référence <strong>{orderRef}</strong> dans le motif de votre virement depuis votre application bancaire (SG, BoursoBank, etc.).
+                    &bull; Indiquez la référence <strong>{orderRef}</strong> dans le motif de votre virement depuis l&apos;application de votre banque (Société Générale, BoursoBank, BNP Paribas...).
                   </p>
                 </div>
               </div>
