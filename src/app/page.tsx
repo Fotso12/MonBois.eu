@@ -8,11 +8,14 @@ import { WoodCatalog } from '@/components/WoodCatalog';
 import { AboutSection } from '@/components/AboutSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
+import { CartDrawer } from '@/components/CartDrawer';
+import { ModernCheckoutModal } from '@/components/ModernCheckoutModal';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedWoodForQuote, setSelectedWoodForQuote] = useState('');
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const handleResetSearch = () => {
     setSearchQuery('');
@@ -21,7 +24,6 @@ export default function Home() {
 
   const handleSelectForQuote = (woodName: string) => {
     setSelectedWoodForQuote(woodName);
-    // Smooth scroll to contact section
     const contactElem = document.getElementById('contact');
     if (contactElem) {
       contactElem.scrollIntoView({ behavior: 'smooth' });
@@ -55,6 +57,15 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      {/* Cart Drawer */}
+      <CartDrawer onProceedToCheckout={() => setIsCheckoutOpen(true)} />
+
+      {/* Modern Checkout Modal */}
+      <ModernCheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+      />
     </div>
   );
 }

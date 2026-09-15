@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { woodCatalog, WoodItem } from '@/data/woods';
 import { WoodCard } from './WoodCard';
 import { WoodModal } from './WoodModal';
-import { OrderModal } from './OrderModal';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { Trees, RotateCcw } from 'lucide-react';
@@ -27,7 +26,6 @@ export const WoodCatalog: React.FC<WoodCatalogProps> = ({
   const searchT = translations[language].search;
   
   const [activeModalWood, setActiveModalWood] = useState<WoodItem | null>(null);
-  const [activeOrderWood, setActiveOrderWood] = useState<WoodItem | null>(null);
 
   // Filter woods based on query and category
   const filteredWoods = woodCatalog.filter((wood) => {
@@ -73,7 +71,6 @@ export const WoodCatalog: React.FC<WoodCatalogProps> = ({
               key={wood.id}
               wood={wood}
               onOpenModal={(w) => setActiveModalWood(w)}
-              onOpenOrder={(w) => setActiveOrderWood(w)}
             />
           ))}
         </div>
@@ -96,18 +93,11 @@ export const WoodCatalog: React.FC<WoodCatalogProps> = ({
         </div>
       )}
 
-      {/* Spec Modal */}
+      {/* Spec Sheet Modal */}
       <WoodModal
         wood={activeModalWood}
         onClose={() => setActiveModalWood(null)}
         onSelectForQuote={onSelectForQuote}
-        onOpenOrder={(w) => setActiveOrderWood(w)}
-      />
-
-      {/* Order & Payment Simulation Wizard Modal */}
-      <OrderModal
-        wood={activeOrderWood}
-        onClose={() => setActiveOrderWood(null)}
       />
     </section>
   );

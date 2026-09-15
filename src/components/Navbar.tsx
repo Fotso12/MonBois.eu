@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useCart } from '@/context/CartContext';
 import { translations } from '@/data/translations';
-import { Trees, Globe, Mail, DollarSign, Euro, Menu, X } from 'lucide-react';
+import { Trees, Globe, Mail, DollarSign, Euro, Menu, X, ShoppingBag } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { language, toggleLanguage, currency, toggleCurrency } = useLanguage();
+  const { totalItemsCount, toggleCart } = useCart();
   const t = translations[language].nav;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -58,9 +60,23 @@ export const Navbar: React.FC = () => {
             </a>
           </nav>
 
-          {/* Action Controls (Email button, Currency, Language Switcher) */}
+          {/* Action Controls (Cart, Email, Currency, Language Switcher) */}
           <div className="hidden lg:flex items-center gap-3">
             
+            {/* Cart Button */}
+            <button
+              onClick={toggleCart}
+              className="relative flex items-center gap-2 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-bold shadow-sm transition-all"
+            >
+              <ShoppingBag className="w-4 h-4 text-emerald-200" />
+              <span>Panier</span>
+              {totalItemsCount > 0 && (
+                <span className="w-5 h-5 bg-amber-400 text-wood-950 rounded-full flex items-center justify-center text-[10px] font-black -mr-1">
+                  {totalItemsCount}
+                </span>
+              )}
+            </button>
+
             {/* Direct Email Action Button */}
             <a
               href="mailto:contact@monbois.eu"
@@ -89,7 +105,7 @@ export const Navbar: React.FC = () => {
               )}
             </button>
 
-            {/* Language Switcher with Icon */}
+            {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
               className="flex items-center gap-2 px-3.5 py-2 bg-wood-800 hover:bg-wood-900 text-white rounded-lg text-sm font-semibold shadow-sm transition-all"
@@ -99,12 +115,24 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Mobile menu button and quick controls */}
+          {/* Mobile menu button & quick controls */}
           <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={toggleCart}
+              className="relative p-2 bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center shadow-sm"
+              title="Mon Panier"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              {totalItemsCount > 0 && (
+                <span className="w-4 h-4 bg-amber-400 text-wood-950 rounded-full flex items-center justify-center text-[9px] font-black -mt-2 -mr-1">
+                  {totalItemsCount}
+                </span>
+              )}
+            </button>
+
             <button
               onClick={toggleCurrency}
               className="px-2.5 py-1.5 bg-stone-100 text-stone-900 rounded-lg text-xs font-bold border border-stone-300 flex items-center gap-1"
-              title="Change Currency"
             >
               {currency === 'EUR' ? <Euro className="w-3.5 h-3.5 text-emerald-600" /> : <DollarSign className="w-3.5 h-3.5 text-blue-600" />}
               <span>{currency}</span>
@@ -113,7 +141,6 @@ export const Navbar: React.FC = () => {
             <button
               onClick={toggleLanguage}
               className="px-2.5 py-1.5 bg-wood-800 text-amber-300 rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm"
-              title="Changer la langue"
             >
               <Globe className="w-3.5 h-3.5 text-amber-300" />
               <span>{language.toUpperCase()}</span>
@@ -166,30 +193,24 @@ export const Navbar: React.FC = () => {
           </nav>
           
           <div className="flex flex-col gap-3 pt-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                toggleCart();
+              }}
+              className="flex items-center justify-center gap-2 py-3 bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-md"
+            >
+              <ShoppingBag className="w-4 h-4 text-emerald-200" />
+              <span>Voir mon Panier ({totalItemsCount} articles)</span>
+            </button>
+
             <a
               href="mailto:contact@monbois.eu"
-              className="flex items-center justify-center gap-2 py-3 bg-wood-100 text-wood-900 rounded-xl font-bold border border-wood-300 text-sm"
+              className="flex items-center justify-center gap-2 py-2.5 bg-wood-100 text-wood-900 rounded-xl font-semibold border border-wood-300 text-xs"
             >
               <Mail className="w-4 h-4 text-wood-700" />
               <span>{t.emailBtn} (contact@monbois.eu)</span>
             </a>
-
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={toggleCurrency}
-                className="flex items-center justify-center gap-1.5 py-2.5 bg-stone-100 text-stone-900 rounded-xl font-bold border border-stone-300 text-xs"
-              >
-                {currency === 'EUR' ? <Euro className="w-4 h-4 text-emerald-600" /> : <DollarSign className="w-4 h-4 text-blue-600" />}
-                <span>{currency === 'EUR' ? 'EUR (€)' : 'USD ($)'}</span>
-              </button>
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center justify-center gap-1.5 py-2.5 bg-wood-800 text-amber-300 rounded-xl font-bold text-xs shadow-sm"
-              >
-                <Globe className="w-4 h-4 text-amber-300" />
-                <span>{language === 'fr' ? 'English (EN)' : 'Français (FR)'}</span>
-              </button>
-            </div>
           </div>
         </div>
       )}

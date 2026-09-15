@@ -3,6 +3,7 @@
 import React from 'react';
 import { WoodItem } from '@/data/woods';
 import { useLanguage } from '@/context/LanguageContext';
+import { useCart } from '@/context/CartContext';
 import { translations } from '@/data/translations';
 import { X, CheckCircle2, ShieldCheck, Scale, Compass, Award, Tag, Mail, ShoppingCart } from 'lucide-react';
 
@@ -10,16 +11,16 @@ interface WoodModalProps {
   wood: WoodItem | null;
   onClose: () => void;
   onSelectForQuote: (woodName: string) => void;
-  onOpenOrder: (wood: WoodItem) => void;
 }
 
 export const WoodModal: React.FC<WoodModalProps> = ({
   wood,
   onClose,
   onSelectForQuote,
-  onOpenOrder,
 }) => {
   const { language, formatPrice } = useLanguage();
+  const { addToCart } = useCart();
+
   if (!wood) return null;
 
   const t = translations[language].modal;
@@ -82,13 +83,13 @@ export const WoodModal: React.FC<WoodModalProps> = ({
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => {
+                  addToCart(wood, 5);
                   onClose();
-                  onOpenOrder(wood);
                 }}
                 className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-1.5 shadow-md transition-all"
               >
                 <ShoppingCart className="w-4 h-4 text-emerald-200" />
-                <span>{t.orderNow}</span>
+                <span>Ajouter au panier</span>
               </button>
 
               <button
