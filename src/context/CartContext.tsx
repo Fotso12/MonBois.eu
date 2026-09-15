@@ -5,7 +5,7 @@ import { WoodItem } from '@/data/woods';
 
 export interface CartItem {
   wood: WoodItem;
-  volume: number; // in m³
+  volume: number; // in m³ or quantity
 }
 
 interface CartContextType {
@@ -20,6 +20,11 @@ interface CartContextType {
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
   toggleCart: () => void;
+  
+  // Added to Cart Confirmation Modal State
+  lastAddedItem: CartItem | null;
+  isAddedModalOpen: boolean;
+  closeAddedModal: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -27,6 +32,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
+  const [isAddedModalOpen, setIsAddedModalOpen] = useState(false);
 
   // Load cart from localStorage
   useEffect(() => {
@@ -55,7 +63,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { wood, volume }];
     });
-    // Quietly add to cart without auto-opening the drawer
+
+    // Set last added item and open confirmation modal
+    setLastAddedItem({ wood, volume });
+    setIsAddedModalOpen(true);
   };
 
   const removeFromCart = (woodId: string) => {
@@ -80,6 +91,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsCartOpen((prev) => !prev);
   };
 
+  const closeAddedModal = () => {
+    setIsAddedModalOpen(false);
+  };
+
   const totalItemsCount = items.length;
   const totalPriceEur = items.reduce((sum, item) => sum + item.wood.priceEur * item.volume, 0);
   const totalPriceUsd = items.reduce((sum, item) => sum + item.wood.priceUsd * item.volume, 0);
@@ -98,6 +113,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isCartOpen,
         setIsCartOpen,
         toggleCart,
+        lastAddedItem,
+        isAddedModalOpen,
+        closeAddedModal,
       }}
     >
       {children}

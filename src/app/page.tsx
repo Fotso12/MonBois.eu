@@ -10,6 +10,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { CartDrawer } from '@/components/CartDrawer';
 import { ModernCheckoutModal } from '@/components/ModernCheckoutModal';
+import { AddedToCartModal } from '@/components/AddedToCartModal';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,6 +61,9 @@ export default function Home() {
 
       {/* Cart Drawer */}
       <CartDrawer onProceedToCheckout={() => setIsCheckoutOpen(true)} />
+
+      {/* Added to Cart Confirmation Modal */}
+      <AddedToCartModal />
 
       {/* Modern Checkout Modal */}
       <ModernCheckoutModal
